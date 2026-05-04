@@ -28,18 +28,48 @@
         /// </summary>
         private void InitializeComponent()
         {
+            dataGridView1 = new DataGridView();
+            Tambah = new Button();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
+            // 
+            // dataGridView1
+            // 
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Location = new Point(2, 59);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.RowHeadersWidth = 51;
+            dataGridView1.Size = new Size(1376, 399);
+            dataGridView1.TabIndex = 0;
+            // 
+            // Tambah
+            // 
+            Tambah.BackColor = Color.Lime;
+            Tambah.BackgroundImageLayout = ImageLayout.Center;
+            Tambah.FlatStyle = FlatStyle.Popup;
+            Tambah.Location = new Point(1220, 12);
+            Tambah.Name = "Tambah";
+            Tambah.Size = new Size(121, 41);
+            Tambah.TabIndex = 1;
+            Tambah.Text = "Tambah";
+            Tambah.UseVisualStyleBackColor = false;
             // 
             // Dashboard
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1373, 470);
+            Controls.Add(Tambah);
+            Controls.Add(dataGridView1);
             Name = "Dashboard";
             Text = "Dashboard";
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
+
+        private DataGridView dataGridView1;
+        private Button Tambah;
     }
 }
