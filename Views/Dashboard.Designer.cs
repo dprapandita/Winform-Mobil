@@ -30,6 +30,7 @@
         {
             dataGridView1 = new DataGridView();
             Tambah = new Button();
+            Update = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -53,12 +54,27 @@
             Tambah.TabIndex = 1;
             Tambah.Text = "Tambah";
             Tambah.UseVisualStyleBackColor = false;
+            Tambah.Click += Tambah_Click;
+            // 
+            // Update
+            // 
+            Update.BackColor = Color.Yellow;
+            Update.BackgroundImageLayout = ImageLayout.Center;
+            Update.FlatStyle = FlatStyle.Popup;
+            Update.Location = new Point(1080, 12);
+            Update.Name = "Update";
+            Update.Size = new Size(121, 41);
+            Update.TabIndex = 2;
+            Update.Text = "Update";
+            Update.UseVisualStyleBackColor = false;
+            Update.Click += Update_Click;
             // 
             // Dashboard
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1373, 470);
+            Controls.Add(Update);
             Controls.Add(Tambah);
             Controls.Add(dataGridView1);
             Name = "Dashboard";
@@ -71,5 +87,6 @@
 
         private DataGridView dataGridView1;
         private Button Tambah;
+        private Button Update;
     }
 }

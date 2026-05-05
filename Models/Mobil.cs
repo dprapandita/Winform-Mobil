@@ -13,7 +13,7 @@ namespace Winform_Mobil.Models
         private int _kapasitasMesin;
         private string _jenisBahanBakar;
         private string _nomorPolisi;
-        private int _harga;
+        private string _kondisi;
 
         public string Merk
         {
@@ -44,7 +44,7 @@ namespace Winform_Mobil.Models
             get { return _tahun; }
             set 
             { 
-                if (value >= 1900 && value <= DateTime.Now.Year)
+                if (value >= 1900 && value <= 2024)
                 {
                     _tahun = value;
                 }
@@ -99,14 +99,14 @@ namespace Winform_Mobil.Models
             }
         }
 
-        public int Harga
+        public string Kondisi
         {
-            get { return _harga; }
+            get { return _kondisi; }
             set 
             { 
-                if (value > 0)
+                if (!string.IsNullOrWhiteSpace())
                 {
-                    _harga = value;
+                    _kondisi = value;
                 }
             }
         }
