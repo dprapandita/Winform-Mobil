@@ -20,10 +20,9 @@ namespace Winform_Mobil.Models
             get { return _merk; }
             set 
             { 
-                if (!string.IsNullOrWhiteSpace(value))
-                {
-                    _merk = value;
-                }
+                if (string.IsNullOrWhiteSpace(value))
+                    throw new ArgumentException("Merk tidak boleh kosong!");
+                _merk = value;
             }
         }
 
@@ -32,10 +31,9 @@ namespace Winform_Mobil.Models
             get { return _tipe; }
             set 
             { 
-                if (!string.IsNullOrWhiteSpace(value))
-                {
-                    _tipe = value;
-                }
+                if (string.IsNullOrWhiteSpace(value))
+                    throw new ArgumentException("Tipe tidak boleh kosong!");
+                _tipe = value;
             }
         }
 
@@ -44,10 +42,9 @@ namespace Winform_Mobil.Models
             get { return _tahun; }
             set 
             { 
-                if (value >= 1900 && value <= 2024)
-                {
-                    _tahun = value;
-                }
+                if (value < 1900 || value > DateTime.Now.Year)
+                    throw new ArgumentException($"Tahun harus antara 1900 dan {DateTime.Now.Year}!");
+                _tahun = value;
             }
         }
 
@@ -56,10 +53,9 @@ namespace Winform_Mobil.Models
             get { return _warna; }
             set 
             { 
-                if (!string.IsNullOrWhiteSpace(value))
-                {
-                    _warna = value;
-                }
+                if (string.IsNullOrWhiteSpace(value))
+                    throw new ArgumentException("Warna tidak boleh kosong!");
+                _warna = value;
             }
         }
 
@@ -68,10 +64,9 @@ namespace Winform_Mobil.Models
             get { return _kapasitasMesin; }
             set 
             { 
-                if (value > 0)
-                {
-                    _kapasitasMesin = value;
-                }
+                if (value <= 0)
+                    throw new ArgumentException("Kapasitas Mesin harus lebih dari 0!");
+                _kapasitasMesin = value;
             }
         }
 
@@ -80,10 +75,9 @@ namespace Winform_Mobil.Models
             get { return _jenisBahanBakar; }
             set 
             { 
-                if (!string.IsNullOrWhiteSpace(value))
-                {
-                    _jenisBahanBakar = value;
-                }
+                if (string.IsNullOrWhiteSpace(value))
+                    throw new ArgumentException("Jenis Bahan Bakar tidak boleh kosong!");
+                _jenisBahanBakar = value;
             }
         }
 
@@ -92,10 +86,9 @@ namespace Winform_Mobil.Models
             get { return _nomorPolisi; }
             set 
             { 
-                if (!string.IsNullOrWhiteSpace(value))
-                {
-                    _nomorPolisi = value;
-                }
+                if (string.IsNullOrWhiteSpace(value))
+                    throw new ArgumentException("Nomor Polisi tidak boleh kosong!");
+                _nomorPolisi = value;
             }
         }
 
@@ -104,10 +97,9 @@ namespace Winform_Mobil.Models
             get { return _kondisi; }
             set 
             { 
-                if (!string.IsNullOrWhiteSpace())
-                {
-                    _kondisi = value;
-                }
+                if (string.IsNullOrWhiteSpace(value))
+                    throw new ArgumentException("Kondisi tidak boleh kosong!");
+                _kondisi = value;
             }
         }
     }

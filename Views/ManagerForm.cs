@@ -11,74 +11,70 @@ namespace Winform_Mobil.Views
 {
     public partial class ManagerForm : Form
     {
-        private Dashboard _dashboard;
-        private Mobil _mobilAkanDiUpdate;
+        public Mobil MobilData { get; private set; }
 
-        public ManagerForm()
+        public ManagerForm(Mobil mobil = null)
         {
             InitializeComponent();
             cbKondisi.Items.AddRange(new string[] { "Baik", "Rusak Ringan", "Rusak Berat" });
-            cbKondisi.SelectedIndex = 0;
-
             cbWarna.Items.AddRange(new string[] { "Merah", "Biru", "Hijau", "Hitam", "Putih" });
-            cbWarna.SelectedIndex = 0;
-        }
 
-        public ManagerForm(Dashboard dashboard, Mobil mobil) : this()
-        {
-            _dashboard = dashboard;
-            _mobilAkanDiUpdate = mobil;
-            textMerk.Text = mobil.Merk;
-            textTipe.Text = mobil.Tipe;
-            textTahun.Text = mobil.Tahun.ToString();
-            cbWarna.SelectedItem = mobil.Warna;
-            textKapasitasMesin.Text = mobil.KapasitasMesin.ToString();
-            textJenisBahanBakar.Text = mobil.JenisBahanBakar;
-            textNopol.Text = mobil.NomorPolisi;
-            cbKondisi.SelectedItem = mobil.Kondisi.ToString();
+            if (mobil != null)
+            {
+                // MODE UPDATE: Isi UI dengan data lama
+                MobilData = mobil;
+                textMerk.Text = mobil.Merk;
+                textTipe.Text = mobil.Tipe;
+                textTahun.Text = mobil.Tahun.ToString();
+                cbWarna.SelectedItem = mobil.Warna;
+                textKapasitasMesin.Text = mobil.KapasitasMesin.ToString();
+                textJenisBahanBakar.Text = mobil.JenisBahanBakar;
+                textNopol.Text = mobil.NomorPolisi;
+                cbKondisi.SelectedItem = mobil.Kondisi;
+            }
+            else
+            {
+                // MODE TAMBAH: Bikin objek mobil kosong baru
+                MobilData = new Mobil();
+                cbKondisi.SelectedIndex = 0;
+                cbWarna.SelectedIndex = 0;
+            }
         }
 
         private void btnSimpan_Click(object sender, EventArgs e)
         {
-            if (_mobilAkanDiUpdate != null)
+            try
             {
-                _mobilAkanDiUpdate.Merk = textMerk.Text;
-                _mobilAkanDiUpdate.Tipe = textTipe.Text;
-                _mobilAkanDiUpdate.Tahun = int.Parse(textTahun.Text);
-                _mobilAkanDiUpdate.Warna = cbWarna.SelectedItem.ToString();
-                _mobilAkanDiUpdate.KapasitasMesin = int.Parse(textKapasitasMesin.Text);
-                _mobilAkanDiUpdate.JenisBahanBakar = textJenisBahanBakar.Text;
-                _mobilAkanDiUpdate.NomorPolisi = textNopol.Text;
-                _mobilAkanDiUpdate.Kondisi = cbKondisi.SelectedIndex;
-            }
-            else
-            {
-                Mobil mobilBaru = new Mobil
-                {
-                    Merk = textMerk.Text,
-                    Tipe = textTipe.Text,
-                    Tahun = int.Parse(textTahun.Text),
-                    Warna = cbWarna.SelectedItem.ToString(),
-                    KapasitasMesin = int.Parse(textKapasitasMesin.Text),
-                    JenisBahanBakar = textJenisBahanBakar.Text,
-                    NomorPolisi = textNopol.Text,
-                    Kondisi = StringToKondisi(cbKondisi.SelectedItem.ToString())
-                };
-                _dashboard.mobilList.Add(mobilBaru);
-            }
-            this.Close();
-        }
+                
 
-        private int StringToKondisi(string kondisi)
-        {
-            switch (kondisi)
+                // Timpa data di dalam objek MobilData dengan inputan dari form
+                // Logika ini otomatis jalan buat mode Tambah maupun Update!
+                MobilData.Merk = textMerk.Text.Trim();
+                MobilData.Tipe = textTipe.Text.Trim();
+                MobilData.Tahun = int.Parse(textTahun.Text.Trim());
+
+                // Pake operator ?. biar nggak crash kalau gak ada yang di-select
+                MobilData.Warna = cbWarna.SelectedItem?.ToString();
+                MobilData.KapasitasMesin = int.Parse(textKapasitasMesin.Text.Trim());
+                MobilData.JenisBahanBakar = textJenisBahanBakar.Text.Trim();
+                MobilData.NomorPolisi = textNopol.Text.Trim();
+                MobilData.Kondisi = cbKondisi.SelectedItem?.ToString();
+
+                MessageBox.Show("Data berhasil disimpan!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // Kasih sinyal ke Dashboard kalau proses sukses, lalu tutup
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            catch (FormatException)
             {
-                case "Baik": return 1;
-                case "Rusak Ringan": return 2;
-                case "Rusak Berat": return 3;
-                default: return 1;
+                MessageBox.Show("Format data tidak valid! Pastikan Tahun dan Kapasitas Mesin adalah angka.", "Error Format", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Terjadi kesalahan: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
+        
     }
 }
